@@ -54,7 +54,7 @@ jobs:
         VERSION: ${{ needs.prepare_all_buildx.outputs.VERSION }}
     strategy:
         matrix:
-          platform: [ amd64, arm64 ]
+          platform: [ amd64, arm64, armv7 ]
           include:
             - platform: arm64
               runner: [self-hosted, linux, ARM64]
