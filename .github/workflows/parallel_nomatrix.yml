@@ -79,11 +79,10 @@ jobs:
           chmod a+x $HOME/.docker/cli-plugins/docker-buildx
           echo -e "{\n  \"experimental\": \"enabled\"\n}" | tee $HOME/.docker/config.json
           docker info
-          cat $HOME/.docker/config.json
-          #docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
+          docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
           docker buildx create --use --driver docker-container
-          docker buildx inspect --bootstrap ${BUILDX_BUILDER}
-          docker buildx ls
+          docker buildx inspect --bootstrap
+
       -
         name: Buildx aarch64
         run: |
