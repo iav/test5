@@ -80,7 +80,7 @@ jobs:
           docker buildx inspect --bootstrap ${BUILDX_BUILDER}
           docker buildx ls
       -
-        name: Buildx ${{ platform }}
+        name: Buildx aarch64
         run: |
           docker buildx build \
             --platform ${{ jobs.buildx-aarch64.buildxplatform }} \
