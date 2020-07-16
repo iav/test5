@@ -65,18 +65,27 @@ jobs:
 
       -
         name: Set up Docker Buildx
-        uses: crazy-max/ghaction-docker-buildx@v3
-        with:
-          buildx-version: latest
-          qemu-version: latest
-
+        # uses: crazy-max/ghaction-docker-buildx@v3
+        # with:
+          # buildx-version: latest
+          # qemu-version: latest
+        run: |
+          mkdir -p $HOME/.docker/cli-plugins/
+          export BUILDX_URL=https://github.com/docker/buildx/releases/download/v0.4.1/buildx-v0.4.1.linux-arm64
+          wget -O $HOME/.docker/cli-plugins/docker-buildx $BUILDX_URL
+          chmod a+x $HOME/.docker/cli-plugins/docker-buildx
+          echo -e '{\n  \"experimental\": \"enabled\"\n}' | tee $HOME/.docker/config.json
+          docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
+          docker buildx create --use --driver docker-container --name ${BUILDX_BUILDER} --platform=${BUILDX_PLATFORM}
+          docker buildx inspect --bootstrap ${BUILDX_BUILDER}
+          docker buildx ls
       -
         name: Buildx ${{ platform }}
         run: |
           docker buildx build \
-            --platform ${{ matrix.buildxplatform }} \
-            --tag $IMAGE_ID:$VERSION-${{ platform }} \
-            --build-arg RUST_TARGET=${{ RUST_TARGET }} \
+            --platform ${{ jobs.buildx-aarch64.buildxplatform }} \
+            --tag $IMAGE_ID:$VERSION-${{ jobs.buildx-aarch64.platform }} \
+            --build-arg RUST_TARGET=${{ jobs.buildx-aarch64.RUST_TARGET }} \
             --progress plain \
             --load .
 
@@ -110,9 +119,9 @@ jobs:
         name: Buildx ${{ matrix.platform }}
         run: |
           docker buildx build \
-            --platform ${{ matrix.buildxplatform }} \
-            --tag $IMAGE_ID:$VERSION-${{ matrix.platform }} \
-            --build-arg RUST_TARGET=${{ matrix.RUST_TARGET }} \
+            --platform ${{ jobs.buildx-amd64.buildxplatform }} \
+            --tag $IMAGE_ID:$VERSION-${{ jobs.buildx-amd64.platform }} \
+            --build-arg RUST_TARGET=${{ jobs.buildx-amd64.RUST_TARGET }} \
             --progress plain \
             --load .
 
