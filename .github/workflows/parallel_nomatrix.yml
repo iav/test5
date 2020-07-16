@@ -72,7 +72,7 @@ jobs:
         run: |
           curl -fsSL https://get.docker.com -o get-docker.sh
           sudo sh get-docker.sh
-          sudo usermod -aG docker $(id -u)
+          sudo usermod -aG docker $(id -un)
           docker info
           mkdir -p $HOME/.docker/cli-plugins/
           export BUILDX_URL=https://github.com/docker/buildx/releases/download/v0.4.1/buildx-v0.4.1.linux-arm64
