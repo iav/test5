@@ -119,9 +119,9 @@ jobs:
         name: Buildx ${{ matrix.platform }}
         run: |
           docker buildx build \
-            --platform ${{ jobs.buildx-amd64.buildxplatform }} \
-            --tag $IMAGE_ID:$VERSION-${{ jobs.buildx-amd64.platform }} \
-            --build-arg RUST_TARGET=${{ jobs.buildx-amd64.RUST_TARGET }} \
+            --platform $buildxplatform  \
+            --tag $IMAGE_ID:$VERSION-$platform \
+            --build-arg RUST_TARGET=$RUST_TARGET \
             --progress plain \
             --load .
 
