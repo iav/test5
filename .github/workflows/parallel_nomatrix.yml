@@ -76,7 +76,7 @@ jobs:
           echo -e "{\n  \"experimental\": \"enabled\"\n}" | tee $HOME/.docker/config.json
           docker info
           docker buildx ls
-          docker buildx create --use --driver docker-container
+          #docker buildx create --use --driver docker-container
           docker buildx inspect --bootstrap
 
   buildx-armv7:
@@ -111,7 +111,7 @@ jobs:
           echo -e "{\n  \"experimental\": \"enabled\"\n}" | tee $HOME/.docker/config.json
           docker info
           docker buildx ls
-          docker buildx create --use --driver docker-container
+          #docker buildx create --use --driver docker-container
           docker buildx inspect --bootstrap
 
       -
