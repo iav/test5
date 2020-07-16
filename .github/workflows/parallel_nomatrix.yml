@@ -77,8 +77,20 @@ jobs:
           echo -e "{\n  \"experimental\": \"enabled\"\n}" | tee $HOME/.docker/config.json
           docker info
           docker buildx ls
-          docker buildx create --use --driver docker-container --name buildername
+          docker buildx create --use --driver docker-container --name $buildername
           docker buildx inspect --bootstrap
+
+      -
+        name: Buildx aarch64
+        run: |
+          docker buildx build \
+            --platform $buildxplatform \
+            --tag $IMAGE_ID:$VERSION-$platform \
+            --build-arg RUST_TARGET=$RUST_TARGET \
+            --progress plain \
+            --load .
+          docker buildx stop
+
 
   buildx-armv7:
     needs: prepare_all_buildx
@@ -113,11 +125,12 @@ jobs:
           echo -e "{\n  \"experimental\": \"enabled\"\n}" | tee $HOME/.docker/config.json
           docker info
           docker buildx ls
-          docker buildx create --use --driver docker-container --name buildername
+          #docker buildx create --use --driver docker-container --name buildername
+          docker buildx create --use
           docker buildx inspect --bootstrap
 
       -
-        name: Buildx aarch64
+        name: Buildx armv7
         run: |
           docker buildx build \
             --platform $buildxplatform \
@@ -125,6 +138,7 @@ jobs:
             --build-arg RUST_TARGET=$RUST_TARGET \
             --progress plain \
             --load .
+          docker buildx stop
 
   buildx-amd64:
     needs: prepare_all_buildx
