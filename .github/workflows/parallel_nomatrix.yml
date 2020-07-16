@@ -90,7 +90,7 @@ jobs:
             --build-arg RUST_TARGET=$RUST_TARGET \
             --progress plain \
             --load .
-          #docker buildx stop
+          docker buildx stop
 
 
   buildx-armv7:
@@ -139,7 +139,7 @@ jobs:
             --build-arg RUST_TARGET=$RUST_TARGET \
             --progress plain \
             --load .
-          #docker buildx stop
+          docker buildx stop
 
   buildx-amd64:
     needs: prepare_all_buildx
