@@ -71,12 +71,12 @@ jobs:
           qemu-version: latest
 
       -
-        name: Buildx ${{ matrix.platform }}
+        name: Buildx ${{ platform }}
         run: |
           docker buildx build \
             --platform ${{ matrix.buildxplatform }} \
-            --tag $IMAGE_ID:$VERSION-${{ matrix.platform }} \
-            --build-arg RUST_TARGET=${{ matrix.RUST_TARGET }} \
+            --tag $IMAGE_ID:$VERSION-${{ platform }} \
+            --build-arg RUST_TARGET=${{ RUST_TARGET }} \
             --progress plain \
             --load .
 
