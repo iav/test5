@@ -1,10 +1,10 @@
-name: buildx for dockerhub
+name: buildx with matrix for dockerhub
 
 # Controls when the action will run. Triggers the workflow on push or pull request
 # events but only for the master branch
 on:
   push:
-#    branches: [ master ]
+    branches: [ master ]
 
     # Publish `v1.2.3` tags as releases.
     tags:
