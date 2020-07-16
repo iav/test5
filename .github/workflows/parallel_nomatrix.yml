@@ -83,9 +83,9 @@ jobs:
         name: Buildx aarch64
         run: |
           docker buildx build \
-            --platform ${{ jobs.buildx-aarch64.buildxplatform }} \
-            --tag $IMAGE_ID:$VERSION-${{ jobs.buildx-aarch64.platform }} \
-            --build-arg RUST_TARGET=${{ jobs.buildx-aarch64.RUST_TARGET }} \
+            --platform ${{ jobs.buildx-aarch64.env.buildxplatform }} \
+            --tag $IMAGE_ID:$VERSION-${{ jobs.buildx-aarch64.env.platform }} \
+            --build-arg RUST_TARGET=${{ jobs.buildx-aarch64.env.RUST_TARGET }} \
             --progress plain \
             --load .
 
