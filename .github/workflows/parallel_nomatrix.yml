@@ -67,6 +67,7 @@ jobs:
         name: Set up Docker Buildx
         env:
           BUILDX_URL: https://github.com/docker/buildx/releases/download/v0.4.1/buildx-v0.4.1.linux-arm64
+          buildername: buildx-aarch64
         run: |
           curl -fsSL https://get.docker.com -o get-docker.sh
           sudo sh get-docker.sh
@@ -76,7 +77,7 @@ jobs:
           echo -e "{\n  \"experimental\": \"enabled\"\n}" | tee $HOME/.docker/config.json
           docker info
           docker buildx ls
-          #docker buildx create --use --driver docker-container
+          docker buildx create --use --driver docker-container --name buildername
           docker buildx inspect --bootstrap
 
   buildx-armv7:
@@ -102,6 +103,7 @@ jobs:
         name: Set up Docker Buildx
         env:
           BUILDX_URL: https://github.com/docker/buildx/releases/download/v0.4.1/buildx-v0.4.1.linux-arm64
+          buildername: buildx-armv7
         run: |
           curl -fsSL https://get.docker.com -o get-docker.sh
           sudo sh get-docker.sh
@@ -111,7 +113,7 @@ jobs:
           echo -e "{\n  \"experimental\": \"enabled\"\n}" | tee $HOME/.docker/config.json
           docker info
           docker buildx ls
-          #docker buildx create --use --driver docker-container
+          docker buildx create --use --driver docker-container --name buildername
           docker buildx inspect --bootstrap
 
       -

@@ -4,5 +4,6 @@ FROM shtripok/rust-musl-builder:arm
 WORKDIR /app
 COPY * ./
 COPY src/ ./src/
+RUN sudo chown rust:rust /app
 RUN env|sort
 RUN cargo build
