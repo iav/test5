@@ -77,7 +77,8 @@ jobs:
           echo -e "{\n  \"experimental\": \"enabled\"\n}" | tee $HOME/.docker/config.json
           docker info
           docker buildx ls
-          docker buildx create --use --driver docker-container --name $buildername
+          #docker buildx create --use --driver docker-container --name $buildername
+          docker buildx create --use
           docker buildx inspect --bootstrap
 
       -
