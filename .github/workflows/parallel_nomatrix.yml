@@ -133,6 +133,7 @@ jobs:
           docker buildx ls
           #docker buildx create --use --driver docker-container --name buildername
           #docker buildx create --use
+          cat /proc/sys/kernel/random/entropy_avail
           echo "::set-output name=buildername::$(docker buildx create --use)"
           docker buildx inspect --bootstrap
 
