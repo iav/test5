@@ -66,6 +66,7 @@ jobs:
 
       -
         name: Set up Docker Buildx
+        id: setupbuildx
         env:
           BUILDX_URL: https://github.com/docker/buildx/releases/download/v0.4.1/buildx-v0.4.1.linux-arm64
           buildername: buildx-aarch64
@@ -79,12 +80,13 @@ jobs:
           docker info
           docker buildx ls
           #docker buildx create --use --driver docker-container --name $buildername
-          docker buildx create --use
+          echo "::set-output name=buildername::$(docker buildx create --use)"
           docker buildx inspect --bootstrap
 
       -
         name: Buildx aarch64
         run: |
+          env
           docker buildx build \
             --platform $buildxplatform \
             --tag $IMAGE_ID:$VERSION-$platform \
